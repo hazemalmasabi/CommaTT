@@ -1,0 +1,999 @@
+<!DOCTYPE html>
+<html lang="ar" dir="rtl">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no, viewport-fit=cover" />
+  <title>Comma Smart School | منصة كوما للتعليم الذكي</title>
+  
+  <!-- SEO & Social Meta -->
+  <meta name="description" content="منصة كوما الذكية لإدارة المدارس والطلاب - تجربة متطورة للويب والجوال مع دعم التثبيت المباشر كـ PWA للايفون والأندرويد" />
+  <meta name="theme-color" content="#1d4ed8" />
+  
+  <!-- Standalone PWA Meta Tags (Removes Browser Search & Navigation Bars) -->
+  <meta name="apple-mobile-web-app-capable" content="yes" />
+  <meta name="mobile-web-app-capable" content="yes" />
+  <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent" />
+  <meta name="apple-mobile-web-app-title" content="Comma Edu" />
+  <meta name="application-name" content="Comma Edu" />
+  <meta name="format-detection" content="telephone=no" />
+
+  <!-- Icons & PWA Manifest -->
+  <link rel="icon" type="image/svg+xml" href="icons/icon.svg" />
+  <link rel="apple-touch-icon" href="icons/icon.svg" />
+  <link rel="manifest" href="manifest.webmanifest" />
+
+  <!-- Stylesheet -->
+  <link rel="stylesheet" href="style.css" />
+</head>
+<body>
+
+  <div class="app-container">
+
+    <!-- ================================================================
+         DESKTOP SIDEBAR NAVIGATION (Shown on Screens >= 900px)
+         ================================================================ -->
+    <aside class="desktop-sidebar">
+      <div>
+        <div class="sidebar-brand">
+          <div class="sidebar-logo">
+            <svg viewBox="0 0 24 24" fill="none" stroke="#ffffff" stroke-width="2.5"><path d="M12 2L2 7l10 5 10-5-10-5zM2 17l10 5 10-5M2 12l10 5 10-5"></path></svg>
+          </div>
+          <div class="sidebar-brand-text">
+            <h2>Comma Smart</h2>
+            <span>منصة الإدارة التعليمية</span>
+          </div>
+        </div>
+
+        <ul class="sidebar-nav-list">
+          <li>
+            <button class="sidebar-nav-btn active" data-tab="dashboard">
+              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor"><path d="M3 9l9-7 9 7v11a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2z"></path><polyline points="9 22 9 12 15 12 15 22"></polyline></svg>
+              <span>لوحة التحكم الرئيسية</span>
+            </button>
+          </li>
+          <li>
+            <button class="sidebar-nav-btn" data-tab="students">
+              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor"><rect x="3" y="3" width="18" height="18" rx="4"></rect><polyline points="9 11 12 14 16 9"></polyline></svg>
+              <span>إدارة الطلاب والسجلات</span>
+            </button>
+          </li>
+          <li>
+            <button class="sidebar-nav-btn" data-tab="users">
+              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor"><path d="M17 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2"></path><circle cx="9" cy="7" r="4"></circle><path d="M23 21v-2a4 4 0 0 0-3-3.87"></path><path d="M16 3.13a4 4 0 0 1 0 7.75"></path></svg>
+              <span>المعلمون والطاقم</span>
+            </button>
+          </li>
+          <li>
+            <button class="sidebar-nav-btn" data-tab="setup">
+              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor"><path d="M18 8A6 6 0 0 0 6 8c0 7-3 9-3 9h18s-3-2-3-9"></path><path d="M13.73 21a2 2 0 0 1-3.46 0"></path></svg>
+              <span>الصفوف والفصول</span>
+            </button>
+          </li>
+          <li>
+            <button class="sidebar-nav-btn" data-tab="more">
+              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor"><circle cx="12" cy="12" r="9"></circle><circle cx="8" cy="12" r="1" fill="currentColor"></circle><circle cx="12" cy="12" r="1" fill="currentColor"></circle><circle cx="16" cy="12" r="1" fill="currentColor"></circle></svg>
+              <span>الإعدادات وتثبيت التطبيق</span>
+            </button>
+          </li>
+        </ul>
+      </div>
+
+      <!-- Direct PWA Install in Sidebar -->
+      <div class="sidebar-pwa-card">
+        <div style="font-size: 13px; font-weight: 800; margin-bottom: 4px;">📲 تطبيق PWA الذكي</div>
+        <div style="font-size: 11.5px; opacity: 0.9; line-height: 1.4;">يعمل على الجوال كأي تطبيق أصيل بدون شريط متصفح وبلا متجر</div>
+        <button class="sidebar-pwa-btn" onclick="triggerInstallPWA()">تثبيت التطبيق الآن</button>
+      </div>
+    </aside>
+
+    <!-- ================================================================
+         MAIN WRAPPER (Top Bar + Responsive Content)
+         ================================================================ -->
+    <div class="main-wrapper">
+
+      <!-- Desktop Top Navbar (Shown on >= 900px) -->
+      <header class="desktop-topbar">
+        <div class="topbar-right-info">
+          <span class="topbar-school-title">Comma Smart School</span>
+          <span class="topbar-academic-badge">العام الدراسي 2025/2026 • الفصل الثاني</span>
+        </div>
+
+        <div class="topbar-left-actions">
+          <button class="topbar-install-btn" onclick="triggerInstallPWA()">
+            <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2"><path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"></path><polyline points="7 10 12 15 17 10"></polyline><line x1="12" y1="15" x2="12" y2="3"></line></svg>
+            <span>تثبيت كـ PWA</span>
+          </button>
+
+          <div class="topbar-user-chip" onclick="navigateTo('more')" style="cursor: pointer;">
+            <div class="topbar-user-avatar">B</div>
+            <div>
+              <div style="font-size: 13px; font-weight: 800; color: #0f172a;">Mr. Bader Al-Khalid</div>
+              <div style="font-size: 11px; color: #64748b;">💻 مدير النظام</div>
+            </div>
+          </div>
+        </div>
+      </header>
+
+      <!-- Content Body -->
+      <main class="content-body">
+
+        <!-- ================================================================
+             TAB 1: لوحة التحكم (DASHBOARD - Screenshots 1 & 2)
+             ================================================================ -->
+        <section id="tab-view-dashboard" class="tab-view active">
+          
+          <!-- Blue Gradient Header with Profile & 6 Stats -->
+          <div class="dashboard-header-bg">
+            <div class="profile-top-row">
+              <div class="profile-info">
+                <span class="school-tagline">Comma Smart School</span>
+                <h1 class="profile-name">Mr. Bader Al-Khalid</h1>
+                <div class="profile-role-line">
+                  <span>💻 مدير النظام</span>
+                </div>
+                <div class="profile-email">bader.alkhalid@comma.edu</div>
+              </div>
+
+              <div class="profile-actions">
+                <button class="icon-btn-glass" onclick="navigateTo('students')" title="بحث في السجلات">
+                  <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><circle cx="11" cy="11" r="8"></circle><line x1="21" y1="21" x2="16.65" y2="16.65"></line></svg>
+                </button>
+                <div class="profile-avatar-badge" onclick="navigateTo('more')" title="الملف الشخصي">
+                  B
+                </div>
+              </div>
+            </div>
+
+            <!-- 6 Counters Grid on Header Glass -->
+            <div class="header-stats-grid">
+              <div class="stat-box-glass" onclick="navigateTo('students')">
+                <span class="stat-box-icon">🎓</span>
+                <span class="stat-box-value" id="metric-students-count">35</span>
+                <span class="stat-box-label">الطلاب</span>
+              </div>
+              <div class="stat-box-glass" onclick="navigateTo('users')">
+                <span class="stat-box-icon">👩‍🏫</span>
+                <span class="stat-box-value" id="metric-teachers-count">0</span>
+                <span class="stat-box-label">المعلمين</span>
+              </div>
+              <div class="stat-box-glass" onclick="navigateTo('setup')">
+                <span class="stat-box-icon">🏛️</span>
+                <span class="stat-box-value" id="metric-classes-count">6</span>
+                <span class="stat-box-label">الفصول</span>
+              </div>
+              <div class="stat-box-glass" onclick="navigateTo('students')">
+                <span class="stat-box-icon">👥</span>
+                <span class="stat-box-value" id="metric-parents-count">9</span>
+                <span class="stat-box-label">أولياء الأمور</span>
+              </div>
+              <div class="stat-box-glass" onclick="navigateTo('setup')">
+                <span class="stat-box-icon">📚</span>
+                <span class="stat-box-value" id="metric-departments-count">2</span>
+                <span class="stat-box-label">الأقسام</span>
+              </div>
+              <div class="stat-box-glass" onclick="navigateTo('students')">
+                <span class="stat-box-icon">⚠️</span>
+                <span class="stat-box-value" id="metric-issues-count">0</span>
+                <span class="stat-box-label">مشاكل</span>
+              </div>
+            </div>
+          </div>
+
+          <!-- Padded Dashboard Body -->
+          <div class="main-content-padded">
+            
+            <!-- Operational Briefing Card (الإحاطة التشغيلية 📂) -->
+            <article class="briefing-card">
+              <div class="briefing-card-header">
+                <h2 class="briefing-title">
+                  <span>📂</span>
+                  الإحاطة التشغيلية
+                </h2>
+              </div>
+
+              <div class="briefing-item" onclick="openModal('coverage-drawer-modal')">
+                <div class="briefing-item-title">تغطية البدلاء تحتاج إلى تنسيق</div>
+                <div class="briefing-item-desc">يوجد 21 بند تغطية بانتظار الإجراء.</div>
+              </div>
+
+              <div class="briefing-item" onclick="openModal('coverage-drawer-modal')">
+                <div class="briefing-item-title">عناصر سير العمل المفتوحة تحتاج إلى متابعة</div>
+                <div class="briefing-item-desc">يوجد 8 عناصر سير عمل مدرسية مفتوحة أو قيد التنفيذ.</div>
+              </div>
+
+              <div class="briefing-footer-note" onclick="openModal('coverage-drawer-modal')">
+                <span>تشغيلي فقط • حتمي</span>
+                <span>›</span>
+              </div>
+            </article>
+
+            <!-- 4 Quick Alert Metric Chips -->
+            <div class="alert-metrics-row">
+              <div class="alert-metric-chip" onclick="navigateTo('students')">
+                <span class="alert-chip-icon">🎓</span>
+                <span class="alert-chip-value color-danger" id="alert-risk-count">7</span>
+                <span class="alert-chip-label">الطلاب في خطر</span>
+              </div>
+              <div class="alert-metric-chip" onclick="navigateTo('setup')">
+                <span class="alert-chip-icon">📚</span>
+                <span class="alert-chip-value color-purple" id="alert-subjects-count">2</span>
+                <span class="alert-chip-label">المواد الدراسية</span>
+              </div>
+              <div class="alert-metric-chip" onclick="navigateTo('students')">
+                <span class="alert-chip-icon">⚠️</span>
+                <span class="alert-chip-value color-warning" id="alert-required-count">0</span>
+                <span class="alert-chip-label">سجلات مطلوبة</span>
+              </div>
+              <div class="alert-metric-chip" onclick="navigateTo('students')">
+                <span class="alert-chip-icon">🔗</span>
+                <span class="alert-chip-value color-cyan" id="alert-missing-links">0</span>
+                <span class="alert-chip-label">روابط مفقودة</span>
+              </div>
+            </div>
+
+            <!-- Section Title: أدوات مدير النظام 💻 -->
+            <div class="section-title-wrap">
+              <h2 class="section-title">
+                <span>💻</span>
+                أدوات مدير النظام
+              </h2>
+            </div>
+
+            <!-- Grid of 10+ Colorful Gradient Cards (Screenshot 1) -->
+            <div class="tools-grid">
+              
+              <div class="tool-card card-theme-school" onclick="navigateTo('setup')">
+                <div class="tool-card-content">
+                  <div class="tool-card-title">نظرة إعداد المدرسة</div>
+                  <div class="tool-card-subtitle">اكتمل الإعداد</div>
+                </div>
+                <div class="tool-card-graphic">
+                  <span class="card-emoji-3d">🏫</span>
+                </div>
+              </div>
+
+              <div class="tool-card card-theme-students" onclick="navigateTo('students')">
+                <div class="tool-card-content">
+                  <div class="tool-card-title">إدارة الطلاب</div>
+                  <div class="tool-card-subtitle">سجلات الطلاب</div>
+                </div>
+                <div class="tool-card-graphic">
+                  <span class="card-emoji-3d">🎓</span>
+                </div>
+              </div>
+
+              <div class="tool-card card-theme-parents" onclick="navigateTo('students')">
+                <div class="tool-card-content">
+                  <div class="tool-card-title">إدارة أولياء الأمور</div>
+                  <div class="tool-card-subtitle">حسابات وروابط</div>
+                </div>
+                <div class="tool-card-graphic">
+                  <span class="card-emoji-3d">👥</span>
+                </div>
+              </div>
+
+              <div class="tool-card card-theme-teachers" onclick="navigateTo('users')">
+                <div class="tool-card-content">
+                  <div class="tool-card-title">المعلمون والطاقم</div>
+                  <div class="tool-card-subtitle">الحسابات والأدوار</div>
+                </div>
+                <div class="tool-card-graphic">
+                  <span class="card-emoji-3d">👩‍🏫</span>
+                </div>
+              </div>
+
+              <div class="tool-card card-theme-classes" onclick="navigateTo('setup')">
+                <div class="tool-card-content">
+                  <div class="tool-card-title">الصفوف والشعب</div>
+                  <div class="tool-card-subtitle">الصفوف والسعة</div>
+                </div>
+                <div class="tool-card-graphic">
+                  <span class="card-emoji-3d">🏛️</span>
+                </div>
+              </div>
+
+              <div class="tool-card card-theme-subjects" onclick="navigateTo('setup')">
+                <div class="tool-card-content">
+                  <div class="tool-card-title">الأقسام والمواد</div>
+                  <div class="tool-card-subtitle">الأقسام والمواد</div>
+                </div>
+                <div class="tool-card-graphic">
+                  <span class="card-emoji-3d">📚</span>
+                </div>
+              </div>
+
+              <div class="tool-card card-theme-schedule" onclick="navigateTo('setup')">
+                <div class="tool-card-content">
+                  <div class="tool-card-title">بناء الجدول</div>
+                  <div class="tool-card-subtitle">الحصص والمواعيد</div>
+                </div>
+                <div class="tool-card-graphic">
+                  <span class="card-emoji-3d">🗓️</span>
+                </div>
+              </div>
+
+              <div class="tool-card card-theme-roles" onclick="navigateTo('users')">
+                <div class="tool-card-content">
+                  <div class="tool-card-title">الأدوار والصلاحيات</div>
+                  <div class="tool-card-subtitle">إدارة الأدوار</div>
+                </div>
+                <div class="tool-card-graphic">
+                  <span class="card-emoji-3d">🔐</span>
+                </div>
+              </div>
+
+              <div class="tool-card card-theme-data" onclick="navigateTo('more')">
+                <div class="tool-card-content">
+                  <div class="tool-card-title">سلامة البيانات</div>
+                  <div class="tool-card-subtitle">روابط معطوبة</div>
+                </div>
+                <div class="tool-card-graphic">
+                  <span class="card-emoji-3d">🔍</span>
+                </div>
+              </div>
+
+              <div class="tool-card card-theme-settings" onclick="navigateTo('more')">
+                <div class="tool-card-content">
+                  <div class="tool-card-title">إعدادات المدرسة</div>
+                  <div class="tool-card-subtitle">السنة والفصول</div>
+                </div>
+                <div class="tool-card-graphic">
+                  <span class="card-emoji-3d">⚙️</span>
+                </div>
+              </div>
+
+            </div>
+          </div>
+        </section>
+
+
+        <!-- ================================================================
+             TAB 2: إدارة الطلاب (STUDENTS - Screenshots 3 & 4)
+             ================================================================ -->
+        <section id="tab-view-students" class="tab-view">
+          
+          <div class="subpage-header students-theme">
+            <div class="subpage-nav-row">
+              <button class="subpage-back-pill" onclick="navigateTo('dashboard')">
+                <span>‹</span>
+                <span>(tabs) admin-students</span>
+              </button>
+            </div>
+
+            <div class="subpage-title-row">
+              <h1 class="subpage-main-title">
+                <span>🎓</span>
+                إدارة الطلاب
+              </h1>
+              <span class="subpage-role-subtitle">مدير النظام</span>
+            </div>
+
+            <!-- 5-Column Stats Strip -->
+            <div class="subpage-stats-strip">
+              <div class="strip-item">
+                <span class="strip-value" id="strip-total">12</span>
+                <span class="strip-label">إجمالي</span>
+              </div>
+              <div class="strip-item">
+                <span class="strip-value" id="strip-active">10</span>
+                <span class="strip-label">نشط</span>
+              </div>
+              <div class="strip-item">
+                <span class="strip-value" id="strip-health">5</span>
+                <span class="strip-label">حلقات ناقصة</span>
+              </div>
+              <div class="strip-item">
+                <span class="strip-value" id="strip-guardian">4</span>
+                <span class="strip-label">بلا ولي أمر</span>
+              </div>
+              <div class="strip-item">
+                <span class="strip-value" id="strip-noclass">1</span>
+                <span class="strip-label">بلا فصل</span>
+              </div>
+            </div>
+
+            <!-- Search Bar inside Subpage Header -->
+            <div class="subpage-search-wrap">
+              <input type="text" id="student-search-input" class="subpage-search-input" placeholder="ابحث بالاسم أو الرقم أو الفصل..." />
+              <div class="search-icon-inside">
+                <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><circle cx="11" cy="11" r="8"></circle><line x1="21" y1="21" x2="16.65" y2="16.65"></line></svg>
+              </div>
+            </div>
+          </div>
+
+          <div class="main-content-padded">
+            
+            <!-- Actions Bar: إضافة طالب + استيراد + تصدير -->
+            <div class="subpage-actions-bar">
+              <button class="action-btn-primary" onclick="openModal('add-student-modal')">
+                <span>+</span>
+                <span>إضافة طالب</span>
+              </button>
+              <button class="action-btn-secondary" onclick="exportStudentsData()">
+                <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"></path><polyline points="7 10 12 15 17 10"></polyline><line x1="12" y1="15" x2="12" y2="3"></line></svg>
+                تصدير
+              </button>
+              <button class="action-btn-secondary" onclick="openImportModal()">
+                <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"></path><polyline points="17 8 12 3 7 8"></polyline><line x1="12" y1="3" x2="12" y2="15"></line></svg>
+                استيراد
+              </button>
+            </div>
+
+            <!-- Filter Pills Row -->
+            <div class="filter-pills-row">
+              <button class="filter-pill student-filter-pill active" data-filter="all" id="pill-count-all">الكل (12)</button>
+              <button class="filter-pill student-filter-pill" data-filter="issues" id="pill-count-issues">المشاكل فقط (7)</button>
+              <button class="filter-pill student-filter-pill" data-filter="noguardian" id="pill-count-noguardian">بلا ولي أمر (4)</button>
+              <button class="filter-pill student-filter-pill" data-filter="incomplete" id="pill-count-incomplete">ملف غير مكتمل (5)</button>
+              <button class="filter-pill student-filter-pill" data-filter="active">نشط</button>
+              <button class="filter-pill student-filter-pill" data-filter="inactive">غير نشط</button>
+            </div>
+
+            <div class="list-counter-label" id="students-list-count">12 طالب من أصل 12</div>
+
+            <!-- Live Students Cards Container -->
+            <div id="students-list-container" class="students-list-wrap">
+              <!-- Dynamically populated via app.js -->
+            </div>
+          </div>
+        </section>
+
+
+        <!-- ================================================================
+             TAB 3: إدارة المستخدمين والطاقم (USERS/STAFF - Screenshot 5)
+             ================================================================ -->
+        <section id="tab-view-users" class="tab-view">
+          
+          <div class="subpage-header users-theme">
+            <div class="subpage-title-row">
+              <span class="subpage-role-subtitle">مدير النظام</span>
+              <h1 class="subpage-main-title">
+                <span>👥</span>
+                إدارة المستخدمين
+              </h1>
+            </div>
+
+            <!-- 3-Column Stats Strip -->
+            <div class="subpage-stats-strip">
+              <div class="strip-item">
+                <span class="strip-value" id="staff-strip-parents">0</span>
+                <span class="strip-label">أولياء</span>
+              </div>
+              <div class="strip-item">
+                <span class="strip-value" id="staff-strip-admins">15</span>
+                <span class="strip-label">إداريون</span>
+              </div>
+              <div class="strip-item">
+                <span class="strip-value" id="staff-strip-teachers">29</span>
+                <span class="strip-label">معلمون</span>
+              </div>
+            </div>
+
+            <!-- Search Bar inside Subpage Header -->
+            <div class="subpage-search-wrap">
+              <input type="text" id="staff-search-input" class="subpage-search-input" placeholder="ابحث بالاسم أو الدور..." />
+              <div class="search-icon-inside">
+                <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><circle cx="11" cy="11" r="8"></circle><line x1="21" y1="21" x2="16.65" y2="16.65"></line></svg>
+              </div>
+            </div>
+          </div>
+
+          <div class="main-content-padded">
+            <div class="filter-pills-row">
+              <button class="filter-pill staff-filter-pill active" data-filter="all" id="pill-staff-all">الكل (44)</button>
+              <button class="filter-pill staff-filter-pill" data-filter="teachers" id="pill-staff-teachers">المعلمون (29)</button>
+              <button class="filter-pill staff-filter-pill" data-filter="admins" id="pill-staff-admins">الإداريون (15)</button>
+              <button class="filter-pill staff-filter-pill" data-filter="parents">أولياء الأمور (0)</button>
+            </div>
+
+            <div style="margin-bottom: 14px;">
+              <button class="action-btn-primary" onclick="openModal('add-staff-modal')">
+                <span>+</span>
+                <span>إضافة مستخدم</span>
+              </button>
+            </div>
+
+            <div id="staff-list-container">
+              <!-- Dynamically populated via app.js -->
+            </div>
+          </div>
+        </section>
+
+
+        <!-- ================================================================
+             TAB 4: الصفوف والفصول (SETUP & CLASSES)
+             ================================================================ -->
+        <section id="tab-view-setup" class="tab-view">
+          <div class="subpage-header" style="background: linear-gradient(145deg, #b45309 0%, #d97706 50%, #f59e0b 100%);">
+            <div class="subpage-title-row">
+              <span class="subpage-role-subtitle">إدارة الأقسام والشعب</span>
+              <h1 class="subpage-main-title">
+                <span>🏛️</span>
+                الصفوف والفصول
+              </h1>
+            </div>
+            <div class="subpage-stats-strip">
+              <div class="strip-item">
+                <span class="strip-value">6</span>
+                <span class="strip-label">فصول دراسية</span>
+              </div>
+              <div class="strip-item">
+                <span class="strip-value">35</span>
+                <span class="strip-label">طالب مسكن</span>
+              </div>
+              <div class="strip-item">
+                <span class="strip-value">92%</span>
+                <span class="strip-label">السعة التشغيلية</span>
+              </div>
+            </div>
+          </div>
+
+          <div class="main-content-padded">
+            <div class="classes-grid">
+              
+              <div class="class-card">
+                <div class="class-card-top">
+                  <div class="class-name">الصف 10 - A</div>
+                  <span class="class-room-badge">قاعة 201</span>
+                </div>
+                <div class="class-teacher-info">رائد الفصل: أ. طارق الزهراني</div>
+                <div style="display: flex; justify-content: space-between; font-size: 11.5px; color: #64748b;">
+                  <span>الطلاب: 24 / 25</span>
+                  <span>96%</span>
+                </div>
+                <div class="progress-bar-wrap">
+                  <div class="progress-fill" style="width: 96%; background: #2563eb;"></div>
+                </div>
+              </div>
+
+              <div class="class-card">
+                <div class="class-card-top">
+                  <div class="class-name">الصف 10 - B</div>
+                  <span class="class-room-badge">قاعة 202</span>
+                </div>
+                <div class="class-teacher-info">رائد الفصل: أ. فهد الشريف</div>
+                <div style="display: flex; justify-content: space-between; font-size: 11.5px; color: #64748b;">
+                  <span>الطلاب: 22 / 25</span>
+                  <span>88%</span>
+                </div>
+                <div class="progress-bar-wrap">
+                  <div class="progress-fill" style="width: 88%; background: #10b981;"></div>
+                </div>
+              </div>
+
+              <div class="class-card">
+                <div class="class-card-top">
+                  <div class="class-name">الصف 9 - A</div>
+                  <span class="class-room-badge">قاعة 101</span>
+                </div>
+                <div class="class-teacher-info">رائد الفصل: أ. منيرة السبيعي</div>
+                <div style="display: flex; justify-content: space-between; font-size: 11.5px; color: #64748b;">
+                  <span>الطلاب: 25 / 25</span>
+                  <span>100%</span>
+                </div>
+                <div class="progress-bar-wrap">
+                  <div class="progress-fill" style="width: 100%; background: #f59e0b;"></div>
+                </div>
+              </div>
+
+              <div class="class-card">
+                <div class="class-card-top">
+                  <div class="class-name">الصف 9 - B</div>
+                  <span class="class-room-badge">قاعة 102</span>
+                </div>
+                <div class="class-teacher-info">رائد الفصل: أ. ماجد العنزي</div>
+                <div style="display: flex; justify-content: space-between; font-size: 11.5px; color: #64748b;">
+                  <span>الطلاب: 20 / 25</span>
+                  <span>80%</span>
+                </div>
+                <div class="progress-bar-wrap">
+                  <div class="progress-fill" style="width: 80%; background: #8b5cf6;"></div>
+                </div>
+              </div>
+
+              <div class="class-card">
+                <div class="class-card-top">
+                  <div class="class-name">الصف 9 - C</div>
+                  <span class="class-room-badge">قاعة 103</span>
+                </div>
+                <div class="class-teacher-info">رائد الفصل: أ. بدرية الشهري</div>
+                <div style="display: flex; justify-content: space-between; font-size: 11.5px; color: #64748b;">
+                  <span>الطلاب: 21 / 25</span>
+                  <span>84%</span>
+                </div>
+                <div class="progress-bar-wrap">
+                  <div class="progress-fill" style="width: 84%; background: #06b6d4;"></div>
+                </div>
+              </div>
+
+              <div class="class-card">
+                <div class="class-card-top">
+                  <div class="class-name">الصف 11 - A</div>
+                  <span class="class-room-badge">قاعة 301</span>
+                </div>
+                <div class="class-teacher-info">رائد الفصل: أ. فيصل الدوسري</div>
+                <div style="display: flex; justify-content: space-between; font-size: 11.5px; color: #64748b;">
+                  <span>الطلاب: 19 / 25</span>
+                  <span>76%</span>
+                </div>
+                <div class="progress-bar-wrap">
+                  <div class="progress-fill" style="width: 76%; background: #ec4899;"></div>
+                </div>
+              </div>
+
+            </div>
+          </div>
+        </section>
+
+
+        <!-- ================================================================
+             TAB 5: المزيد والإعدادات (SETTINGS & PWA DIRECT INSTALL)
+             ================================================================ -->
+        <section id="tab-view-more" class="tab-view">
+          <div class="subpage-header" style="background: linear-gradient(145deg, #334155 0%, #475569 50%, #64748b 100%);">
+            <div class="subpage-title-row">
+              <span class="subpage-role-subtitle">تكوين النظام وتطبيق الجوال</span>
+              <h1 class="subpage-main-title">
+                <span>⚙️</span>
+                الإعدادات وتثبيت التطبيق
+              </h1>
+            </div>
+          </div>
+
+          <div class="main-content-padded">
+            
+            <!-- PROMINENT PWA DIRECT DOWNLOAD & INSTALL CARD -->
+            <div class="pwa-hero-box">
+              <div style="display: flex; align-items: center; gap: 14px;">
+                <div style="font-size: 38px;">📱</div>
+                <div>
+                  <h3 style="font-size: 18px; font-weight: 800; margin-bottom: 3px;">تثبيت المنصة كتطبيق  </h3>
+                  <p style="font-size: 13px; opacity: 0.95; line-height: 1.4;">
+                    يمكنك تنزيل التطبيق مباشرة على جهاز الآيفون أو الأندرويد !
+                  </p>
+                </div>
+              </div>
+
+              <!-- DIRECT 1-CLICK ACTION BUTTON -->
+              <button class="pwa-direct-install-btn" onclick="triggerInstallPWA()">
+                <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"></path><polyline points="7 10 12 15 17 10"></polyline><line x1="12" y1="15" x2="12" y2="3"></line></svg>
+                <span>📲 تنزيل وتثبيت التطبيق الآن على جهازك</span>
+              </button>
+            </div>
+
+            <!-- Settings Menu Links -->
+            <div style="background: #fff; border-radius: 20px; border: 1px solid #e2e8f0; overflow: hidden; margin-bottom: 16px;">
+              
+              <div class="user-card-item" style="border: none; border-radius: 0; border-bottom: 1px solid #f1f5f9; margin: 0;" onclick="openModal('pwa-guide-modal')">
+                <div class="user-info-side">
+                  <span style="font-size: 22px;">📖</span>
+                  <div>
+                    <div style="font-weight: 700; font-size: 14px;">طريقة التثبيت على الآيفون والاندرويد بالتفصيل</div>
+                    <div style="font-size: 11.5px; color: #64748b;">خطوات «إضافة إلى الشاشة الرئيسية» لمستخدمي Safari و Chrome</div>
+                  </div>
+                </div>
+                <span>›</span>
+              </div>
+
+              <div class="user-card-item" style="border: none; border-radius: 0; border-bottom: 1px solid #f1f5f9; margin: 0;" onclick="showToast('السنة الدراسية الحالية: 2025/2026 - الفصل الثاني')">
+                <div class="user-info-side">
+                  <span style="font-size: 22px;">📅</span>
+                  <div>
+                    <div style="font-weight: 700; font-size: 14px;">السنة الأكاديمية والتقويم</div>
+                    <div style="font-size: 11.5px; color: #64748b;">العام الدراسي 2025/2026 - الفصل الثاني</div>
+                  </div>
+                </div>
+                <span>›</span>
+              </div>
+
+              <div class="user-card-item" style="border: none; border-radius: 0; border-bottom: 1px solid #f1f5f9; margin: 0;" onclick="showToast('تم فحص سلامة البيانات: جميع السجلات متطابقة بنسبة 100% ✓')">
+                <div class="user-info-side">
+                  <span style="font-size: 22px;">🛡️</span>
+                  <div>
+                    <div style="font-weight: 700; font-size: 14px;">فحص سلامة الروابط والبيانات</div>
+                    <div style="font-size: 11.5px; color: #64748b;">التحقق من السجلات المعطوبة والعلاقات المفقودة</div>
+                  </div>
+                </div>
+                <span>›</span>
+              </div>
+
+              <div class="user-card-item" style="border: none; border-radius: 0; margin: 0;" onclick="exportStudentsData()">
+                <div class="user-info-side">
+                  <span style="font-size: 22px;">💾</span>
+                  <div>
+                    <div style="font-weight: 700; font-size: 14px;">النسخ الاحتياطي وتصدير السجلات</div>
+                    <div style="font-size: 11.5px; color: #64748b;">تحميل نسخة JSON من قاعدة بيانات الطلاب</div>
+                  </div>
+                </div>
+                <span>›</span>
+              </div>
+
+            </div>
+
+            <!-- Role Switcher for Demo -->
+            <div style="background: #fff; border-radius: 20px; border: 1px solid #e2e8f0; padding: 16px; margin-bottom: 14px;">
+              <h3 style="font-size: 14px; font-weight: 800; color: #0f172a; margin-bottom: 10px;">تبديل الدور للتجربة (Demo Roles)</h3>
+              <div style="display: grid; grid-template-columns: repeat(3, 1fr); gap: 8px;">
+                <button class="filter-pill active" onclick="showToast('تم تفعيل واجهة: مدير النظام 💻')">مدير النظام</button>
+                <button class="filter-pill" onclick="showToast('تم تفعيل واجهة: المعلم 👩‍🏫')">معلم</button>
+                <button class="filter-pill" onclick="showToast('تم تفعيل واجهة: ولي الأمر 👨‍👧')">ولي أمر</button>
+              </div>
+            </div>
+
+            <div style="text-align: center; color: #94a3b8; font-size: 11.5px; padding: 10px 0;">
+              <div>Comma Smart School Platform • v2.4.0</div>
+              <div>Modern Responsive Web & Mobile PWA Prototype</div>
+            </div>
+
+          </div>
+        </section>
+
+      </main>
+
+      <!-- ================================================================
+           MOBILE FLOATING FROSTED GLASS BOTTOM BAR (Shown on Mobile < 900px)
+           ================================================================ -->
+      <footer class="bottom-nav-shell">
+        <nav class="bottom-nav-capsule">
+          <button class="nav-tab-btn active" data-tab="dashboard">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor"><path d="M3 9l9-7 9 7v11a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2z"></path><polyline points="9 22 9 12 15 12 15 22"></polyline></svg>
+            <span>لوحة التحكم</span>
+          </button>
+
+          <button class="nav-tab-btn" data-tab="users">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor"><path d="M17 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2"></path><circle cx="9" cy="7" r="4"></circle><path d="M23 21v-2a4 4 0 0 0-3-3.87"></path><path d="M16 3.13a4 4 0 0 1 0 7.75"></path></svg>
+            <span>المستخدمون</span>
+          </button>
+
+          <button class="nav-tab-btn" data-tab="students">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor"><rect x="3" y="3" width="18" height="18" rx="4"></rect><polyline points="9 11 12 14 16 9"></polyline></svg>
+            <span>الطلاب</span>
+          </button>
+
+          <button class="nav-tab-btn" data-tab="setup">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor"><path d="M18 8A6 6 0 0 0 6 8c0 7-3 9-3 9h18s-3-2-3-9"></path><path d="M13.73 21a2 2 0 0 1-3.46 0"></path></svg>
+            <span>الإعداد</span>
+          </button>
+
+          <button class="nav-tab-btn" data-tab="more">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor"><circle cx="12" cy="12" r="9"></circle><circle cx="8" cy="12" r="1" fill="currentColor"></circle><circle cx="12" cy="12" r="1" fill="currentColor"></circle><circle cx="16" cy="12" r="1" fill="currentColor"></circle></svg>
+            <span>المزيد</span>
+          </button>
+        </nav>
+      </footer>
+
+    </div>
+  </div>
+
+  <!-- ================================================================
+       MODAL 1: إضافة طالب جديد (Add Student Modal)
+       ================================================================ -->
+  <div id="add-student-modal" class="modal-overlay">
+    <div class="bottom-sheet">
+      <div class="sheet-handle"></div>
+      <h2 class="sheet-header-title">إضافة طالب جديد 🎓</h2>
+      <p class="sheet-header-desc">سجل طالب جديد وتسكينه بالفصل وحساب ولي الأمر مباشرة</p>
+
+      <form id="add-student-form">
+        <div class="form-group">
+          <label class="form-label" for="new-student-name">اسم الطالب الثلاثي</label>
+          <input type="text" id="new-student-name" class="form-input" placeholder="مثال: تركي فهد الدوسري" required />
+        </div>
+
+        <div class="form-row">
+          <div class="form-group">
+            <label class="form-label" for="new-student-grade">الصف الدراسي</label>
+            <select id="new-student-grade" class="form-select">
+              <option value="الصف 10">الصف 10</option>
+              <option value="الصف 9">الصف 9</option>
+              <option value="الصف 11">الصف 11</option>
+              <option value="الصف 12">الصف 12</option>
+              <option value="بلا فصل">بلا فصل</option>
+            </select>
+          </div>
+          <div class="form-group">
+            <label class="form-label" for="new-student-section">الشعبة</label>
+            <select id="new-student-section" class="form-select">
+              <option value="10-A">10-A</option>
+              <option value="10-B">10-B</option>
+              <option value="9-A">9-A</option>
+              <option value="9-B">9-B</option>
+              <option value="9-C">9-C</option>
+              <option value="11-A">11-A</option>
+            </select>
+          </div>
+        </div>
+
+        <div class="form-group">
+          <label class="form-label" for="new-student-guardian">اسم ولي الأمر</label>
+          <input type="text" id="new-student-guardian" class="form-input" placeholder="مثال: فهد محمد الدوسري" />
+        </div>
+
+        <div class="form-group">
+          <label class="form-label" for="new-student-phone">رقم هاتف ولي الأمر</label>
+          <input type="tel" id="new-student-phone" class="form-input" placeholder="05xxxxxxxx" />
+        </div>
+
+        <div class="form-group" style="display: flex; align-items: center; gap: 8px; margin-top: 10px;">
+          <input type="checkbox" id="new-student-health" style="width: 18px; height: 18px;" />
+          <label for="new-student-health" style="font-size: 13px; font-weight: 600; color: #475569; cursor: pointer;">
+            يوجد ملاحظات في الفحص الصحي المبدئي
+          </label>
+        </div>
+
+        <button type="submit" class="modal-submit-btn">حفظ وتسجيل الطالب</button>
+      </form>
+    </div>
+  </div>
+
+  <!-- ================================================================
+       MODAL 2: إضافة مستخدم / كادر (Add Staff Modal)
+       ================================================================ -->
+  <div id="add-staff-modal" class="modal-overlay">
+    <div class="bottom-sheet">
+      <div class="sheet-handle"></div>
+      <h2 class="sheet-header-title">إضافة عضو طاقم جديد 👥</h2>
+      <p class="sheet-header-desc">تسجيل معلم أو كادر إداري جديد في المدرسة</p>
+
+      <form id="add-staff-form">
+        <div class="form-group">
+          <label class="form-label" for="new-staff-name-ar">الاسم بالعربية</label>
+          <input type="text" id="new-staff-name-ar" class="form-input" placeholder="مثال: أ. عبدالعزيز التميمي" required />
+        </div>
+
+        <div class="form-group">
+          <label class="form-label" for="new-staff-name-en">الاسم بالإنجليزية</label>
+          <input type="text" id="new-staff-name-en" class="form-input" placeholder="Mr. Abdulaziz Al-Tamimi" />
+        </div>
+
+        <div class="form-row">
+          <div class="form-group">
+            <label class="form-label" for="new-staff-role">المسمى الوظيفي</label>
+            <input type="text" id="new-staff-role" class="form-input" placeholder="مثال: معلم فيزياء" required />
+          </div>
+          <div class="form-group">
+            <label class="form-label" for="new-staff-type">نوع الحساب</label>
+            <select id="new-staff-type" class="form-select">
+              <option value="teacher">معلم</option>
+              <option value="admin">إداري</option>
+            </select>
+          </div>
+        </div>
+
+        <button type="submit" class="modal-submit-btn">إضافة الحساب وتفعيل الصلاحيات</button>
+      </form>
+    </div>
+  </div>
+
+  <!-- ================================================================
+       MODAL 3: تفاصيل ملف الطالب (Student Details Sheet)
+       ================================================================ -->
+  <div id="student-details-modal" class="modal-overlay">
+    <div class="bottom-sheet">
+      <div class="sheet-handle"></div>
+      <div id="student-modal-body"></div>
+    </div>
+  </div>
+
+  <!-- ================================================================
+       MODAL 4: تفاصيل الموظف (Staff Details Sheet)
+       ================================================================ -->
+  <div id="staff-details-modal" class="modal-overlay">
+    <div class="bottom-sheet">
+      <div class="sheet-handle"></div>
+      <div id="staff-modal-body"></div>
+    </div>
+  </div>
+
+  <!-- ================================================================
+       MODAL 5: خيارات سريعة للطالب (Quick Actions)
+       ================================================================ -->
+  <div id="quick-actions-modal" class="modal-overlay">
+    <div class="bottom-sheet">
+      <div class="sheet-handle"></div>
+      <div id="quick-actions-body"></div>
+    </div>
+  </div>
+
+  <!-- ================================================================
+       MODAL 6: الإحاطة التشغيلية وبدلاء المعلمين (Coverage Drawer)
+       ================================================================ -->
+  <div id="coverage-drawer-modal" class="modal-overlay">
+    <div class="bottom-sheet">
+      <div class="sheet-handle"></div>
+      <h2 class="sheet-header-title">تغطية البدلاء وسير العمل 📂</h2>
+      <p class="sheet-header-desc">21 بند تغطية معلق و 8 عناصر سير عمل تحتاج اعتماد</p>
+      
+      <div style="background: #f8fafc; border-radius: 14px; padding: 12px; margin-bottom: 10px; border-right: 4px solid #ef4444;">
+        <div style="font-weight: 700; font-size: 13.5px;">تغطية حصة الرياضيات (الصف 10 - A)</div>
+        <div style="font-size: 12px; color: #64748b;">غياب أ. فهد الشريف • البديل المقترح: أ. طارق الزهراني (الحصة 3)</div>
+      </div>
+
+      <div style="background: #f8fafc; border-radius: 14px; padding: 12px; margin-bottom: 10px; border-right: 4px solid #f59e0b;">
+        <div style="font-weight: 700; font-size: 13.5px;">تغطية مختبر العلوم والحاسب</div>
+        <div style="font-size: 12px; color: #64748b;">إجازة اضطرارية • البديل المقترح: أ. بدرية الشهري (الحصة 5)</div>
+      </div>
+
+      <div style="background: #f8fafc; border-radius: 14px; padding: 12px; margin-bottom: 16px; border-right: 4px solid #3b82f6;">
+        <div style="font-weight: 700; font-size: 13.5px;">اعتماد خطة النشاط اللاصفي لشهر أكتوبر</div>
+        <div style="font-size: 12px; color: #64748b;">بانتظار توقيع الإدارة الأكاديمية</div>
+      </div>
+
+      <button class="modal-submit-btn" onclick="showToast('تم إرسال إشعارات التغطية لكافة المعلمين البدلاء ✓'); closeModal('coverage-drawer-modal');">
+        اعتماد كافة البدلاء وإرسال التنبيهات
+      </button>
+    </div>
+  </div>
+
+  <!-- ================================================================
+       MODAL 7: دليل التنزيل والتثبيت كـ PWA للايفون والأندرويد
+       ================================================================ -->
+  <div id="pwa-guide-modal" class="modal-overlay">
+    <div class="bottom-sheet">
+      <div class="sheet-handle"></div>
+      <h2 class="sheet-header-title">تثبيت التطبيق على جوالك 📲</h2>
+      <p class="sheet-header-desc">طريقة تثبيت Comma Smart School كتطبيق مستقل </p>
+
+      <div style="margin-bottom: 18px;">
+        <h4 style="font-size: 14px; font-weight: 800; color: #1e40af; margin-bottom: 10px;">🍏 طريقة التثبيت على آيفون (iOS Safari):</h4>
+        
+        <div class="pwa-instruction-step">
+          <span class="step-num">1</span>
+          <span class="step-text">افتح الرابط في متصفح <strong>سفاري (Safari)</strong> على هاتفك الايفون.</span>
+        </div>
+
+        <div class="pwa-instruction-step">
+          <span class="step-num">2</span>
+          <span class="step-text">اضغط على زر المشاركة بالأسفل <strong>(Share / أيقونة المربع وبداخله سهم ⎋)</strong>.</span>
+        </div>
+
+        <div class="pwa-instruction-step">
+          <span class="step-num">3</span>
+          <span class="step-text">مرر القائمة لأسفل واختر <strong>«إضافة إلى الشاشة الرئيسية» (Add to Home Screen)</strong>.</span>
+        </div>
+
+        <div class="pwa-instruction-step">
+          <span class="step-num">4</span>
+          <span class="step-text">اضغط <strong>إضافة (Add)</strong>، وسيتم تنزيل أيقونة التطبيق على شاشة هاتفك الرئيسية، وعند فتحه سيعمل بشاشة كاملة وبدون شريط عنوان أو بحث!</span>
+        </div>
+      </div>
+
+      <div style="margin-bottom: 18px;">
+        <h4 style="font-size: 14px; font-weight: 800; color: #059669; margin-bottom: 10px;">🤖 طريقة التثبيت على أندرويد والكمبيوتر (Chrome):</h4>
+        <div class="pwa-instruction-step">
+          <span class="step-num">✓</span>
+          <span class="step-text">اضغط على زر <strong>«تثبيت التطبيق»</strong> المباشر بالأسفل، وسيطلب منك المتصفح تأكيد التثبيت فوراً.</span>
+        </div>
+      </div>
+
+      <button class="modal-submit-btn" onclick="triggerNativeInstallPrompt(); closeModal('pwa-guide-modal');" style="background: #059669;">
+        تثبيت فوري الآن 🚀
+      </button>
+    </div>
+  </div>
+
+  <!-- ================================================================
+       MODAL 8: نافذة الاستيراد (Import Dialog)
+       ================================================================ -->
+  <div id="import-dialog-modal" class="modal-overlay">
+    <div class="bottom-sheet">
+      <div class="sheet-handle"></div>
+      <h2 class="sheet-header-title">استيراد بيانات الطلاب 📥</h2>
+      <p class="sheet-header-desc">يمكنك رفع ملف Excel / CSV أو ملف JSON مطابق للمنظومة</p>
+
+      <div style="border: 2px dashed #bfdbfe; border-radius: 16px; padding: 26px; text-align: center; margin-bottom: 16px; background: #f8fafc;">
+        <div style="font-size: 38px; margin-bottom: 8px;">📄</div>
+        <div style="font-weight: 700; color: #1e40af; font-size: 14px;">اسحب الملف هنا أو انقر للتصفح</div>
+        <div style="font-size: 12px; color: #64748b; margin-top: 4px;">الملفات المدعومة: .CSV, .XLSX, .JSON</div>
+      </div>
+
+      <button class="modal-submit-btn" onclick="showToast('تم استيراد بيانات نموذجية وتحديث السجلات بنجاح ✓'); closeModal('import-dialog-modal');">
+        استيراد الملف التجريبي
+      </button>
+    </div>
+  </div>
+
+  <!-- Interactive JavaScript Engine -->
+  <script src="app.js"></script>
+</body>
+</html>

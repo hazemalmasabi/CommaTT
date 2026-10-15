@@ -1,0 +1,21 @@
+{
+  "name": "Comma Smart School | كوما للتعليم الذكي",
+  "short_name": "Comma Edu",
+  "description": "منصة كوما الذكية لإدارة المدارس والطلاب - Comma Smart School Platform",
+  "start_url": "./index.html",
+  "scope": "./",
+  "display": "standalone",
+  "orientation": "portrait",
+  "background_color": "#0f172a",
+  "theme_color": "#1d4ed8",
+  "icons": [
+    {
+      "src": "icons/icon.svg",
+      "sizes": "192x192 512x512",
+      "type": "image/svg+xml",
+      "purpose": "any maskable"
+    }
+  ],
+  "lang": "ar",
+  "dir": "rtl"
+}
